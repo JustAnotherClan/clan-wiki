@@ -111,11 +111,11 @@ def update_cwl_group(war_json: dict, war_key: str, cwl_group: dict | None):
             opp_tag_norm = normalize_tag(opp_tag)
             for i, rnd in enumerate(cwl_group["rounds"], start=1):
                 for war_tag in rnd.get("warTags", []):
-                    # We canâ€™t resolve warTags to wars here without extra calls,
+                    # We can’t resolve warTags to wars here without extra calls,
                     # so for Phase 1 we just store war_key and day if we know it.
                     # If you want, we can later enhance this with more API calls.
                     pass
-            # For now, weâ€™ll just not set day if we canâ€™t infer it cleanly.
+            # For now, we’ll just not set day if we can’t infer it cleanly.
     # Load existing group file
     if group_path.exists():
         with group_path.open("r", encoding="utf-8") as f:
