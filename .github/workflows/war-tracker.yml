@@ -1,0 +1,40 @@
+name: War Tracker
+
+on:
+  schedule:
+    - cron: "0 * * * *"   # Every hour, at minute 0
+  workflow_dispatch:       # Allows manual runs
+
+jobs:
+  track-war:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install requests python-dotenv
+
+      - name: Create .env file
+        run: |
+          echo "COC_API_KEY=${{ secrets.COC_API_KEY }}" >> .env
+          echo "CLAN_TAG=${{ secrets.CLAN_TAG }}" >> .env
+
+      - name: Run war tracker
+        run: python src/war_tracker.py
+
+      - name: Commit and push changes
+        run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "actions@github.com"
+          git add data/wars/*.json data/last_saved_war.txt || true
+          git commit -m "Auto-save war result" || true
+          git push || true
