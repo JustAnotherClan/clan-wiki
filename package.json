@@ -1,0 +1,11 @@
+{
+  "name": "coc-proxy",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "build": "echo \"no build step\""
+  },
+  "devDependencies": {
+    "wrangler": "^2.0.0"
+  }
+}
